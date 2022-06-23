@@ -1,2 +1,0 @@
-# Projeto_Laboratoria
-Atualização
