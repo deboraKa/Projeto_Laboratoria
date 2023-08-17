@@ -1,0 +1,98 @@
+**CRIAR SCHEMA:
+
+create schema dolar_debora_cassimiro
+
+**CRIAR TABELA STAGE:
+
+create table dolar_debora_cassimiro.dolar_Stage_debora_cassimiro (
+cotacaoCompra varchar(max),
+cotacaoVenda varchar(max),
+cotacaoHoraCompra varchar(max));
+
+**CRIAR TABELA FINAL:
+
+create table dolar_debora_cassimiro.dolar_final_debora.cassimiro (
+cotacaoCompra float,
+cotacaoVenda float,
+cotacaoHoraCompra Datetime);
+
+**MOSTRAR TABELAS CRIADAS:
+
+SELECT * FROM information_schema.tables
+
+WHERE TABLE_NAME LIKE '%debora_cassimiro%';
+
+**CRIAR PROCEDURE:
+
+create procedure[dolar_debora_cassimiro].[procedure_debora_cassimiro]
+AS BEGIN
+
+**A QUERY TRUNCATE remove apenas os dados, permanecendo toda a estrutura dela.
+
+TRUNCATE TABLE[dolar_debora_cassimiro].[dolar_final_debora_cassimiro]
+INSERT INTO [dolar_debora_cassimiro].[dolar_final_debora_cassimiro]
+SELECT
+
+**O CAST transforma o tipo de dado de uma tabela em outro tipo de dado.
+** O REPLACE subistitui as caracteristica de um dado para outro.
+
+	CAST(replace(cotacaoCompra, ','',''.')As float),
+	CAST(replace(cotacaoVenda,','',''.') As float),
+	CAST(DataHoraCotacao as datetime)
+from[dolar_debora_cassimiro].[dolar_Stage_debora_cassimiro]
+END
+
+** Para ver se a procedure foi criado corretamente
+
+SELECT *  FROM information_schema.routines 
+
+ WHERE routine_type = 'PROCEDURE'
+
+ AND SPECIFIC_SCHEMA LIKE '%debora%';
+
+no Data Factory - abrir sua pasta
+novo pipeline dentro de sua pasta
+Dataset(step) copydata (ele quem irá fazer o input e output)
+buscar dados - http - csv
+
+campo origem
+criar um novo AZV usando o e-mail do Walter como indicação
+validação do certificado - desativar
+tipo de autenticação - anonimo
+primeira linha como cabeçalho
+
+campo coletor (onde irei mandar meus dados)
+sqldatabase
+azuresqldatabase2
+
+publicar tudo e depurar
+no DF - clicar no óculos(detalhes) e ver se as informações batem
+select * from no sql
+
+novo dataset(step) stored procedure
+campo configurações - AzureSqlDatabase2
+nome do procedimento armazenado - diretório no BD da minha procedure
+vou linkar os 2 steps
+publicar tudo e depurar
+
+novo dataset(step) copy data
+azuresqldatabase2
+tabela final
+
+campo coletor
+armazenamento do BLOB - Parquet
+criar novo
+seguir o mesmo caminho da criação do meu
+antes de indicar o caminho do arquivo do conteiner, vou abrir meu blob
+volto pro azure(nova aba)- estudos azure - stgestudos
+clico em armazenamento de dados - conteiners, e crio um novo
+volto pro DF e indico o conteiner criado
+
+linko o procedure com o copydata
+publico tudo, e depuro
+clico no óculos(detalhes) e vejo se está tudo ok.
+
+
+
+
+
